@@ -1,0 +1,10 @@
+{% extends 'home.html' %}
+
+{% block content %}
+<h2>Фильтрация транзакций</h2>
+<form method="GET">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Застосувати фільтр</button>
+</form>
+{% endblock %}

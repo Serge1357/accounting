@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Авторізація</h2>
+<form method="post">
+    {% csrf_token %}
+    <label for="username">Ім'я користувача:</label>
+    <input type="text" name="username" id="username" required>
+    <br>
+    <label for="password">Пароль:</label>
+    <input type="password" name="password" id="password" required>
+    <br>
+    <input type="submit" value="Login">
+</form>
+<p>ще не зареєстровані? <a href="{% url 'signup' %}">зареєструватись</a>.</p>
+<p>Забули пароль? <a href="{% url 'password_reset' %}">Відновлення паролю</a>.</p>
+{% endblock %}

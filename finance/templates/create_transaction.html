@@ -1,0 +1,70 @@
+{% extends 'home.html' %}
+
+{% block content %}
+<h1>Створити транзакцію</h1>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+<!--  <select id="id_transaction_type" name="transaction_type">-->
+<!--    {% for choice in form.transaction_type.field.choices %}-->
+<!--    <option value="{{ choice.0 }}" {% if choice.0 == form.data.transaction_type %}selected{% endif %}>{{ choice.1 }}</option>-->
+<!--    {% endfor %}-->
+<!--  </select>-->
+<!--  &lt;!&ndash; Вывод значений переменных на консоль &ndash;&gt;-->
+<!--  {% for category in form.category.field.choices %}-->
+<!--    {% if category.0 == form.data.category %}-->
+<!--      {{ category.0 }} - {{ category.1 }} <br>-->
+<!--    {% endif %}-->
+<!--  {% endfor %}-->
+<!--  <select id="id_category" name="category">-->
+<!--    {% for category in category_choices %}-->
+<!--    <option value="{{ category.0 }}" {% if category.0 == form.data.category %}selected{% endif %}>{{ category.1 }}</option>-->
+<!--    {% endfor %}-->
+<!--  </select>-->
+  <button type="submit">Додати</button>
+</form>
+<!--<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
+<!--{% verbatim %}-->
+<!--<script>-->
+<!--    const transactionTypeSelect = document.querySelector('#id_transaction_type');-->
+<!--    const categorySelect = document.querySelector('#id_category');-->
+<!--    const categoryChoices = {-->
+<!--      'OUT': [-->
+<!--        {% for category in expense_category_choices %}-->
+<!--          { value: '{{ category.0 }}', label: '{{ category.1 }}' },-->
+<!--        {% endfor %}-->
+<!--      ],-->
+<!--      'IN': [-->
+<!--        {% for category in income_category_choices %}-->
+<!--          { value: '{{ category.0 }}', label: '{{ category.1 }}' },-->
+<!--        {% endfor %}-->
+<!--      ]-->
+<!--    };-->
+
+<!--    function updateCategoryOptions() {-->
+<!--      const selectedType = transactionTypeSelect.value;-->
+<!--      const selectedCategories = categoryChoices[selectedType];-->
+
+<!--      categorySelect.innerHTML = '';-->
+
+<!--      for (const category of selectedCategories) {-->
+<!--        const option = document.createElement('option');-->
+<!--        option.value = category.value;-->
+<!--        option.textContent = category.label;-->
+<!--        {% if form.data.category %}-->
+<!--        if (category.value === '{{ form.data.category }}') {-->
+<!--          option.selected = true;-->
+<!--        }-->
+<!--        {% endif %}-->
+<!--        categorySelect.appendChild(option);-->
+<!--      }-->
+<!--    }-->
+
+<!--    transactionTypeSelect.addEventListener('change', updateCategoryOptions);-->
+<!--    updateCategoryOptions();-->
+<!--</script>-->
+<!--{% endverbatim %}-->
+{% endblock %}
+
+
+

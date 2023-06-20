@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+<p>Ви ввійшли як {{ user.username }}. Ваш id - {{ user.id }}.</p>
+<a href="{% url 'logout' %}">Вихід</a>
+{% endif %}
+
+
+<a href="{% url 'create_transaction' %}">Створити транзакцію</a>
+<a href="{% url 'filter_transactions' %}">Фільтр</a>
+
+{% if transactions %}
+<h2>Список транзакцій</h2>
+<table>
+    <thead>
+    <tr>
+        <th>Дата</th>
+        <th>Тип</th>
+        <th>Категорія</th>
+        <th>Сума</th>
+        <th>Дії</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for transaction in transactions %}
+    <tr>
+        <td>{{ transaction.date }}</td>
+        <td>{{ transaction.transaction_type }}</td>
+        <td>{{ transaction.category }}</td>
+        <td>{{ transaction.amount }}</td>
+        <td><a href="{% url 'edit_transaction' transaction.pk %}">Редагувати</a> | <a href="{% url 'delete_transaction' transaction.pk %}">Видалити</a></td>
+    </tr>
+    {% endfor %}
+    </tbody>
+    <p>Баланс: {{ account.balance }}</p>
+</table>
+<p>Сума відфільтрованих транзакцій: {{ filtered_transactions_sum }}</p>
+{% else %}
+<p>Транзакції відсутні.</p>
+{% endif %}
+{% endblock %}
