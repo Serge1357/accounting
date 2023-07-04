@@ -2,9 +2,34 @@
 
 {% block content %}
 <h2>Реєстрація</h2>
-<form method="post">
+<!--<form method="post">-->
+<!--  {% csrf_token %}-->
+<!--  {{ form.as_p }}-->
+<!--  <button type="submit">Зареєструватись</button>-->
+<!--</form>-->
+<form method="POST" class="form__registration">
   {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Зареєструватись</button>
+  <input type="text" name="username" placeholder="Name" class="input" autocomplete="name">
+  <span class="error-text"></span>
+
+  <input type="text" name="surname" placeholder="Surname" class="input" autocomplete="name">
+  <span class="error-text"></span>
+
+  <input type="email" name="mail" placeholder="Email" class="input" autocomplete="email">
+  <span class="error-text"></span>
+
+  <input type="email" name="confirm-mail" placeholder="Confirm your email" class="input" autocomplete="email">
+  <span class="error-text"></span>
+
+  <input type="password" name="pass" placeholder="Password" class="input" autocomplete="new-password">
+  <span class="error-text"></span>
+
+  <input type="password" name="confirm-pass" placeholder="Confirm your password" class="input" autocomplete="new-password">
+  <span class="error-text"></span>
+
+  <!--        <input type="tel" name="phone" placeholder="Phone number +XXXXXXXXX" class="input" autocomplete="phone">-->
+  <!--        <span class="error-text"></span>-->
+
+  <input type="submit" value="Registration" class="submit__btn">
 </form>
 {% endblock %}

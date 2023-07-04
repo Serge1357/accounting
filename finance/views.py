@@ -1,5 +1,6 @@
 from django.shortcuts import render,  redirect, get_object_or_404
 from django.contrib.auth.views import LoginView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
+from django.contrib.auth.models import User
 from .models import Transaction, Category, Account
 from .forms import TransactionForm, TransactionFilterForm, SignUpForm
 from django.contrib.auth import login, authenticate, logout
@@ -8,24 +9,53 @@ from django.contrib.auth.decorators import login_required
 from datetime import datetime, date
 from django.http import HttpResponse
 from django.db.models import Sum
+from django.contrib import messages
 from django.core.exceptions import ValidationError
+
+
 
 
 
 def signup(request):
     if request.method == 'POST':
-        form = SignUpForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            # автоматический вход после регистрации
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password1')
-            user = authenticate(username=username, password=password)
+        first_name = request.POST.get('username')
+        password = request.POST.get('pass')
+        confirm_password = request.POST.get('confirm-pass')
+        email = request.POST.get('mail')
+        confirm_email = request.POST.get('confirm-mail')
+        last_name = request.POST.get('surname')
+
+        if password != confirm_password:
+            error_message = 'Passwords do not match.'
+            return render(request, 'base.html', {'error_message': error_message})
+
+        if email != confirm_email:
+            error_message = 'Emails do not match.'
+            return render(request, 'base.html', {'error_message': error_message})
+
+        # Проверка уникальности имени пользователя и адреса электронной почты
+        if User.objects.filter(username=email).exists():
+            error_message = 'Email is already registered.'
+            return render(request, 'base.html', {'error_message': error_message})
+
+        if User.objects.filter(email=email).exists():
+            error_message = 'Email is already registered.'
+            return render(request, 'base.html', {'error_message': error_message})
+
+        # Создание пользователя
+        user = User.objects.create_user(username=email, first_name=first_name, password=password, email=email, last_name=last_name)
+
+        # Аутентификация пользователя и редирект или отображение ошибки
+        user = authenticate(username=email, password=password)
+        if user is not None:
             login(request, user)
             return redirect('home')
-    else:
-        form = SignUpForm()
-    return render(request, 'signup.html', {'form': form})
+        else:
+            error_message = 'Failed to authenticate user.'
+            return render(request, 'base.html', {'error_message': error_message})
+
+    return render(request, 'signup.html')
+
 
 
 
@@ -188,6 +218,10 @@ class MyLoginView(LoginView):
     template_name = 'login.html'  # шаблон страницы авторизации
     redirect_authenticated_user = True  # если пользователь уже авторизован, перенаправляем его на главную страницу
     success_url = reverse_lazy('home')  # перенаправление после успешной авторизации
+
+    def form_invalid(self, form):
+        messages.error(self.request, 'Неправильний логін або пароль.')
+        return super().form_invalid(form)
 
     def get_success_url(self):
         return self.success_url

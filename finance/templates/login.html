@@ -2,16 +2,33 @@
 
 {% block content %}
 <h2>Авторізація</h2>
-<form method="post">
+<!--<form method="post">-->
+<!--    {% csrf_token %}-->
+<!--    <label for="username">Ім'я користувача:</label>-->
+<!--    <input type="text" name="username" id="username" required>-->
+<!--    <br>-->
+<!--    <label for="password">Пароль:</label>-->
+<!--    <input type="password" name="password" id="password" required>-->
+<!--    <br>-->
+<!--    <input type="submit" value="Login">-->
+<!--</form>-->
+<form method="POST" class="form__login">
     {% csrf_token %}
-    <label for="username">Ім'я користувача:</label>
-    <input type="text" name="username" id="username" required>
+    <input type="email" name="username" id="username" required placeholder="Email" class="input" autocomplete="email">
+    <span class="error-text"></span>
+
+    <input type="password" name="password" id="password" required placeholder="Password" class="input" autocomplete="current-password">
+    <span class="error-text"></span>
+
     <br>
-    <label for="password">Пароль:</label>
-    <input type="password" name="password" id="password" required>
-    <br>
-    <input type="submit" value="Login">
+    <input type="submit" value="Log in" class="submit__btn">
 </form>
+
 <p>ще не зареєстровані? <a href="{% url 'signup' %}">зареєструватись</a>.</p>
 <p>Забули пароль? <a href="{% url 'password_reset' %}">Відновлення паролю</a>.</p>
+
+{% if form.non_field_errors %}
+<p class="error-message">{{ form.non_field_errors }}</p>
+{% endif %}
+
 {% endblock %}

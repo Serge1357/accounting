@@ -1,21 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{% block title %}Домашня бухгалтерія{% endblock %}</title>
-</head>
-<body>
-<header>
-    <nav>
-         <a href="{% url 'login' %}">Вхід</a>
-         <a href="{% url 'signup' %}">Реєстрация</a>
-     </nav>
- </header>
-<h1>Домашня бухгалтерія</h1>
-<p>Здесь ви маєте змогу вводити свої транзакціії та переглядати список усіх збережених транзакцій.</p>
- <main>
-     {% block content %}
-     {% endblock %}
- </main>
- </body>
- </html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Домашня бухгалтерія{% endblock %}</title>
+    </head>
+    <body>
+    <header>
+        <nav>
+             <a href="{% url 'login' %}">Вхід</a>
+             <a href="{% url 'signup' %}">Реєстрация</a>
+         </nav>
+     </header>
+    <h1>Домашня бухгалтерія</h1>
+    <p>Здесь ви маєте змогу вводити свої транзакціії та переглядати список усіх збережених транзакцій.</p>
+    {% if error_message %}
+    <span class="error-text">{{ error_message }}</span>
+    {% endif %}
+     <main>
+         {% block content %}
+         {% endblock %}
+     </main>
+     </body>
+     </html>

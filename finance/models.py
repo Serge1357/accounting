@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, AbstractUser, Group, Permission
 from django.db.models import Sum
 from decimal import Decimal
 from django.utils import timezone
@@ -189,3 +189,15 @@ class User(models.Model):
 
     def get_transactions_by_date_range(self, start_date, end_date):
         return self.transactions.filter(date__range=[start_date, end_date])
+
+# class User(AbstractUser):
+#     phone = models.CharField(max_length=20)
+#     first_name = models.CharField(max_length=30)
+#     last_name = models.CharField(max_length=30)
+#
+#     class Meta:
+#         swappable = 'AUTH_USER_MODEL'
+
+# User.groups.field.related_name = 'finance_user_set'
+# User.user_permissions.field.related_name = 'finance_user_set'
+
